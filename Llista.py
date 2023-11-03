@@ -16,7 +16,7 @@ class Llista:
             self.registres.append(registre)
             return registre
         else:
-            raise ValueError("Duplicate article name")
+            raise ValueError("Nom de l'article ja existeix")
 
     def read_registre(self, nom_article):
         for registre in self.registres:
@@ -37,7 +37,7 @@ class Llista:
             if registre.article.get_nom() == nom_article:
                 self.registres.remove(registre)
                 return
-        raise ValueError("Article not found")
+        raise ValueError("No s'ha trobat l'article")
 
 
     def create_categoria(self, categoria):
@@ -45,14 +45,14 @@ class Llista:
             self.categories.append(categoria)
             return categoria
         else:
-            raise ValueError("Duplicate category name")
+            raise ValueError("El nom de la categoria ja existeix")
 
 
     def read_categoria(self, nom_categoria):
         for categoria in self.categories:
             if categoria.get_nom() == nom_categoria:
                 return categoria
-        return None
+        raise ValueError("No s'ha trobat la categoria")
 
 
     def update_categoria(self, categoria):
@@ -60,14 +60,14 @@ class Llista:
             if c.get_nom() == categoria.get_nom():
                 self.categories[i] = categoria
                 return categoria
-        return None
+        raise ValueError("No s'ha trobat la categoria")
 
     def delete_categoria(self, nom_categoria):
         for categoria in self.categories:
             if categoria.get_nom() == nom_categoria:
                 self.categories.remove(categoria)
                 return
-        raise ValueError("Category not found")
+        raise ValueError("No s'ha trobat la categoria")
 
     def desa_a_disc(self):
         pass
