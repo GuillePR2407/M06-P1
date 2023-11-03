@@ -20,6 +20,6 @@ class Categoria:
         for article in self.articles:
             if article.get_nom() == nom_article:
                 self.articles.remove(article)
-                print(f"El artículo '{nom_article}' ha sido eliminado de la categoría.")
+                print(f"L'article '{nom_article}' ha sigut eliminat de la categoría.")
                 return
-        print(f"No se encontró un artículo con el nombre '{nom_article}' en la categoría.")
+        print(f"No s'ha trobat un article amb el nombre '{nom_article}' en la categoría.")
