@@ -9,7 +9,10 @@ class Llista:
         self.categories = []
 
     def get_registres(self):
-        return self.registres
+        registres_dict = []
+        for registre in self.registres:
+            registres_dict.append(registre.to_dict())
+        return registres_dict
 
     def create_registre(self, registre):
         if self.read_registre(registre.article.get_nom()) is None:
@@ -24,12 +27,12 @@ class Llista:
                 return registre
             return None
 
-    def update_registre(self, registre):
-        for i, r in enumerate(self.registres):
-            if r.article.get_nom() == registre.article.get_nom():
-                self.registres[i] = registre
+    def update_registre(self, nom_article, nova_quantitat):
+        for registre in self.registres:
+            if registre.article.get_nom() == nom_article:
+                registre.set_quantitat(nova_quantitat)
                 return registre
-        return None
+        raise ValueError("No s'ha trobat l'article")
 
 
     def delete_registre(self, nom_article):
@@ -52,7 +55,8 @@ class Llista:
         for categoria in self.categories:
             if categoria.get_nom() == nom_categoria:
                 return categoria
-        raise ValueError("No s'ha trobat la categoria")
+            else:
+                raise ValueError("No s'ha trobat la categoria")
 
 
     def update_categoria(self, categoria):
@@ -69,8 +73,23 @@ class Llista:
                 return
         raise ValueError("No s'ha trobat la categoria")
 
-    def desa_a_disc(self):
-        pass
+    def desa_a_disc(self, filename='data.json'):
+        data = {
+            'registres': [r.to_dict() for r in self.registres],
+            'categories': [c.to_dict() for c in self.categories]
+        }
+        with open(filename, 'w') as file:
+            json.dump(data, file, indent=4)
 
-    def llegeix_de_disc(self):
-        pass
+    def llegeix_de_disc(self, filename='data.json'):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+                self.registres = [Registre.from_dict(r) for r in data['registres']]
+                self.categories = [Categoria.from_dict(c) for c in data['categories']]
+                print(data['registres'])
+                print(data['categories'])
+        except FileNotFoundError:
+            # Si el archivo no existe todavía, se crea vacío.
+            self.registres = []
+            self.categories = []

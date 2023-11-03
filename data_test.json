@@ -1,0 +1,16 @@
+{
+    "registres": [
+        {
+            "article": {
+                "nom": "Doritos"
+            },
+            "quantitat": 5
+        }
+    ],
+    "categories": [
+        {
+            "nom": "Aperitivos",
+            "articles": []
+        }
+    ]
+}

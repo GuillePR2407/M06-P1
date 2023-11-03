@@ -1,3 +1,5 @@
+from Article import Article
+
 class Categoria:
     def __init__(self, nom):
         self.nom = nom
@@ -23,3 +25,15 @@ class Categoria:
                 print(f"L'article '{nom_article}' ha sigut eliminat de la categoría.")
                 return
         print(f"No s'ha trobat un article amb el nombre '{nom_article}' en la categoría.")
+
+    def to_dict(self):
+        return {
+            'nom': self.nom,
+            'articles': [article.to_dict() for article in self.articles]
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        categoria = cls(data['nom'])
+        categoria.articles = [Article.from_dict(article_data) for article_data in data['articles']]
+        return categoria
